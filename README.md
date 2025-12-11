@@ -31,7 +31,7 @@ El resultado final incluye un flujo completo de autenticación, un dashboard per
 | **Base de datos** | (MySQL, SQLite, etc.) | Configuración necesaria en `.env`. |
 
 ## 📁 Estructura Recomendada del Proyecto
-
+```text
 proyecto-auth/
 ├─ app/
 ├─ bootstrap/
@@ -47,38 +47,6 @@ proyecto-auth/
 ├─ .env
 ├─ composer.json
 └─ README.md
-
-```text
-ejercicio-4/
-├── app/
-│   ├── Http/
-│   │   └── Controllers/
-│   │       ├── PlayersController.php    # Controlador para jugadores
-│   │       ├── SportsController.php     # Controlador para deportes
-│   │       └── TeamsController.php      # Controlador para equipos
-│   └── Models/
-│       ├── Player.php                # Modelo para jugadores
-│       ├── Sport.php                 # Modelo para deportes
-│       └── Team.php                  # Modelo para equipos
-├── resources/
-│   └── views/
-│       ├── layouts/
-│       │   └── app.blade.php           # Plantilla base
-│       ├── players/
-│       │   ├── create.blade.php        # Vista para crear jugador
-│       │   ├── edit.blade.php          # Vista para editar jugador
-│       │   └── index.blade.php         # Vista general de jugador
-│       ├── sports/
-│       │   ├── create.blade.php        # Vista para crear deporte
-│       │   ├── edit.blade.php          # Vista para editar deporte
-│       │   └── index.blade.php         # Vista general de deporte
-│       ├── teams/
-│       │   ├── create.blade.php        # Vista para crear equipo
-│       │   ├── edit.blade.php          # Vista para editar equipo
-│       │   └── index.blade.php         # Vista general de equipo
-│       └── index.blade.php             # Dashboard principal
-└── routes/
-    └── web.php                         # Rutas web del sistema
 
 ```
 ---
