@@ -32,9 +32,21 @@ El resultado final incluye un flujo completo de autenticación, un dashboard per
 
 ## 📁 Estructura Recomendada del Proyecto
 
-La estructura de archivos clave relevante para la autenticación y las vistas es la siguiente:
-
-proyecto-auth/├─ app/│  ├─ Http/│  │  └─ Controllers/│  │     └─ GoogleController.php  <-- Lógica Socialite├─ config/│  └─ services.php               <-- Configuración de Google├─ resources/│  ├─ views/│  │  ├─ welcome.blade.php        <-- Página para visitantes│  │  ├─ auth/│  │  └─ dashboard.blade.php      <-- Dashboard personalizado├─ routes/│  └─ web.php                    <-- Rutas de Socialite├─ .env└─ README.md
+proyecto-auth/
+├─ app/
+├─ bootstrap/
+├─ config/
+├─ database/
+├─ resources/
+│ ├─ views/
+│ │ ├─ welcome.blade.php
+│ │ ├─ auth/
+│ │ └─ dashboard.blade.php
+├─ routes/
+│ └─ web.php
+├─ .env
+├─ composer.json
+└─ README.md
 ---
 
 ## 🚀 Pasos para la Creación y Configuración (Comandos Exactos)
