@@ -44,4 +44,13 @@
             </x-primary-button>
         </div>
     </form>
+
+    <!-- Login con Google -->
+    <div class="mt-4">
+        <a href="{{ route('google.login') }}"
+        class="w-full inline-flex justify-center items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-800 focus:outline-none focus:border-red-800 focus:ring ring-red-300 disabled:opacity-25 transition ease-in-out duration-150">
+            Login con Google
+        </a>
+    </div>
+    
 </x-guest-layout>
