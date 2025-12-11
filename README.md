@@ -7,53 +7,141 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# 🛡️ Proyecto Laravel: Autenticación (Breeze) + Google (Socialite)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📝 Resumen del Proyecto
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Este proyecto es un ejemplo práctico en **Laravel** que implementa un sistema de autenticación robusto combinando dos métodos clave:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1.  **Autenticación tradicional por usuario/contraseña** (Implementado con **Laravel Breeze** - Blade Stack).
+2.  **Inicio de sesión social con Google** (Implementado con **Laravel Socialite**).
 
-## Learning Laravel
+El resultado final incluye un flujo completo de autenticación, un dashboard personalizado para usuarios autenticados y una página de bienvenida modificada para visitantes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 📦 Tecnologías y Requisitos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Tecnología | Requisito | Notas |
+| :--- | :--- | :--- |
+| **PHP** | `>= 8.1` | Lenguaje de programación principal. |
+| **Composer** | | Manejador de dependencias de PHP. |
+| **Laravel** | Versiones 8, 9, 10+ | Las instrucciones son compatibles. |
+| **Laravel Breeze** | | Scaffolding de autenticación por defecto. |
+| **Laravel Socialite** | | Paquete para login con Google. |
+| **Node.js / NPM** | | Necesario para compilar assets (CSS/JS). |
+| **Base de datos** | (MySQL, SQLite, etc.) | Configuración necesaria en `.env`. |
 
-## Laravel Sponsors
+## 📁 Estructura Recomendada del Proyecto
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+La estructura de archivos clave relevante para la autenticación y las vistas es la siguiente:
 
-### Premium Partners
+proyecto-auth/├─ app/│  ├─ Http/│  │  └─ Controllers/│  │     └─ GoogleController.php  <-- Lógica Socialite├─ config/│  └─ services.php               <-- Configuración de Google├─ resources/│  ├─ views/│  │  ├─ welcome.blade.php        <-- Página para visitantes│  │  ├─ auth/│  │  └─ dashboard.blade.php      <-- Dashboard personalizado├─ routes/│  └─ web.php                    <-- Rutas de Socialite├─ .env└─ README.md
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🚀 Pasos para la Creación y Configuración (Comandos Exactos)
 
-## Contributing
+Ejecuta los siguientes comandos en tu terminal.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 1. Crear Proyecto Laravel e Inicializar Git
 
-## Code of Conduct
+```bash
+# Crear proyecto Laravel
+composer create-project laravel/laravel proyecto-auth
+cd proyecto-auth
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Inicializar Git
+git init
+git add .
+git commit -m "chore: initial project setup"
+# Nota: Este es el commit Inicial sugerido antes de instalar dependencias adicionales.
+2. Instalar Laravel Breeze (Auth Usuario/Contraseña)Bash# Instalar Breeze
+composer require laravel/breeze --dev
 
-## Security Vulnerabilities
+# Instalar scaffolding (Blade Stack por defecto)
+php artisan breeze:install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Instalar dependencias frontend y compilar
+npm install
+npm run build    # O `npm run dev` para desarrollo
+php artisan migrate
+✅ Commit sugerido:Bashgit add .
+git commit -m "feature: user/password authentication using Breeze"
+3. Instalar y Configurar Socialite (Login con Google)3.1. Instalar DependenciaBashcomposer require laravel/socialite
+3.2. Configuración de Credenciales de GoogleAccede a Google Cloud Console → Credentials.Crea un OAuth 2.0 Client ID.Añade el Redirect URI necesario (Ejemplo: http://localhost:8000/auth/google/callback).3.3. Configurar .envAñade las credenciales obtenidas al archivo .env:Fragmento de códigoGOOGLE_CLIENT_ID=tu_client_id
+GOOGLE_CLIENT_SECRET=tu_client_secret
+GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+3.4. Agregar Servicio en config/services.phpAñade este bloque al array $services:PHP// config/services.php
 
-## License
+'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect' => env('GOOGLE_REDIRECT_URI'),
+],
+3.5. Definir Rutas en routes/web.phpAñade las rutas de redirección y callback, asegurando el uso del controlador:PHP// routes/web.php
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+use App\Http\Controllers\GoogleController;
+
+Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+3.6. Crear e Implementar GoogleControllerBashphp artisan make:controller GoogleController
+Copia la siguiente implementación mínima en app/Http/Controllers/GoogleController.php:PHP<?php
+
+namespace App\Http\Controllers;
+
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
+class GoogleController extends Controller
+{
+    public function redirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function callback()
+    {
+        $googleUser = Socialite::driver('google')->stateless()->user();
+
+        $user = User::firstOrCreate(
+            ['email' => $googleUser->getEmail()],
+            [
+                'name' => $googleUser->getName(),
+                'password' => bcrypt(Str::random(16)), // Generar password obligatorio
+            ]
+        );
+
+        Auth::login($user);
+
+        return redirect()->intended('/dashboard');
+    }
+}
+✅ Commit sugerido:Bashgit add .
+git commit -m "feature: google authentication via Socialite"
+4. Personalización de Vistas4.1. Agregar Botón de Login con GoogleEdita resources/views/auth/login.blade.php para incluir el enlace:Blade<a href="{{ route('google.login') }}" class="btn">Iniciar con Google</a>
+4.2. Personalizar DashboardModifica resources/views/dashboard.blade.php para mostrar contenido personalizado:Blade<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl">Bienvenido, {{ Auth::user()->name }}</h2>
+    </x-slot>
+    </x-app-layout>
+✅ Commit sugerido:Bashgit add .
+git commit -m "feature: customized dashboard for authenticated users"
+4.3. Modificar Página de BienvenidaSustituye el contenido de resources/views/welcome.blade.php por una vista para visitantes:Blade<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bienvenido</title>
+</head>
+<body>
+  <h1>Bienvenido a la app</h1>
+  <p>Información para visitantes.</p>
+  <a href="{{ route('login') }}">Iniciar sesión</a>
+  <a href="{{ route('register') }}">Registrarse</a>
+</body>
+</html>
+✅ Commit sugerido:Bashgit add .
+git commit -m "feature: custom welcome page for guests"
+🛠️ Comandos Útiles para DesarrolloComandoDescripciónphp artisan serve --host=0.0.0.0 --port=8000Ejecutar servidor local de Laravel.php artisan migrateEjecutar las migraciones pendientes.npm run buildCompilar assets para producción.npm run devCompilar assets en modo desarrollo/vigilancia.🌟 Buena Práctica de Commits SugeridaPara mantener un historial de Git limpio y descriptivo, se recomienda la siguiente secuencia de commits:chore: initial project setupfeature: user/password authentication using Breezefeature: google authentication via Socialitefeature: customized dashboard for authenticated usersfeature: custom welcome page for guestsdocs: add project documentation in README.md🔐 Notas de SeguridadSecretos: No guardes CLIENT_SECRET ni claves privadas en commits públicos. El archivo .env debe estar en el .gitignore.Gestión de Cuentas: Considera agregar validaciones extra en el callback de Socialite (ej., bloquear dominios, vincular cuentas existentes) según las políticas de tu aplicación.📤 Subir a GitHubUna vez completado, sube tu proyecto a un repositorio remoto:Bashgit remote add origin [https://github.com/tu_usuario/proyecto-auth.git](https://github.com/tu_usuario/proyecto-auth.git)
+git push -u origin main
+📝 LicenciaEste repositorio usa la licencia MIT por defecto.Autor: Victor M.
