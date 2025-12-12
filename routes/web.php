@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
+use Laravel\Socialite\Socialite;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +19,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/auth/google', [GoogleController::class, 'redirect'])->name('google.login');
-Route::get('/auth/google/callback', [GoogleController::class, 'callback']);
+/*Route::get('/google-auth/redirect',function(){
+    return Socialite::driver('google')->redirect();
+})->name('google.login');
+Route::get('/google-auth/callback',function(){
+    $user = Socialite::driver('google')->user();
+    $user = User::updateCreate([
+        'google_id' => $user_google->id,
+    ],
+    [
+        'name' => $user_google->name,
+        'email' => $user_google->email,
+    ]);
+    Auth::login($user);
+    return redirect('/dashboard');
+    //$user->token
+});
+*/
+
+
+Route::get('/google-auth/redirect', [GoogleController::class, 'redirect'])->name('google.login');
+Route::get('/google-auth/callback', [GoogleController::class, 'callback']);
 
 require __DIR__.'/auth.php';
