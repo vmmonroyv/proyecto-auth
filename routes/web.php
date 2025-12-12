@@ -8,10 +8,18 @@ use Laravel\Socialite\Socialite;
 Route::get('/', function () {
     return view('welcome');
 });
-
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+*/
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('custom.auth');
+
+Route::get('/welcome_guest', function () {
+    return view('welcome_guest');
+})->name('welcome.guest');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
